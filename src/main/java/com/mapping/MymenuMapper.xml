@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.dao.MymenuMapper" >
+  <resultMap id="BaseResultMap" type="com.model.Mymenu" >
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="text" property="text" jdbcType="VARCHAR" />
+    <result column="pid" property="pid" jdbcType="VARCHAR" />
+    <result column="iconcls" property="iconcls" jdbcType="VARCHAR" />
+    <result column="src" property="src" jdbcType="VARCHAR" />
+    <result column="seq" property="seq" jdbcType="DECIMAL" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, text, pid, iconcls, src, seq
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from mymenu
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  
+  <select id="selectById" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from mymenu m
+    where m.pid = #{id,jdbcType=VARCHAR}
+  </select>
+  
+  <select id="selectAllMenu" resultMap="BaseResultMap">
+    select 
+    *
+    from mymenu m where m.pid is null
+  </select>
+  
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from mymenu
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.model.Mymenu" >
+    insert into mymenu (id, text, pid, 
+      iconcls, src, seq)
+    values (#{id,jdbcType=VARCHAR}, #{text,jdbcType=VARCHAR}, #{pid,jdbcType=VARCHAR}, 
+      #{iconcls,jdbcType=VARCHAR}, #{src,jdbcType=VARCHAR}, #{seq,jdbcType=DECIMAL})
+  </insert>
+  <insert id="insertSelective" parameterType="com.model.Mymenu" >
+    insert into mymenu
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="text != null" >
+        text,
+      </if>
+      <if test="pid != null" >
+        pid,
+      </if>
+      <if test="iconcls != null" >
+        iconcls,
+      </if>
+      <if test="src != null" >
+        src,
+      </if>
+      <if test="seq != null" >
+        seq,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="text != null" >
+        #{text,jdbcType=VARCHAR},
+      </if>
+      <if test="pid != null" >
+        #{pid,jdbcType=VARCHAR},
+      </if>
+      <if test="iconcls != null" >
+        #{iconcls,jdbcType=VARCHAR},
+      </if>
+      <if test="src != null" >
+        #{src,jdbcType=VARCHAR},
+      </if>
+      <if test="seq != null" >
+        #{seq,jdbcType=DECIMAL},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.model.Mymenu" >
+    update mymenu
+    <set >
+      <if test="text != null" >
+        text = #{text,jdbcType=VARCHAR},
+      </if>
+      <if test="pid != null" >
+        pid = #{pid,jdbcType=VARCHAR},
+      </if>
+      <if test="iconcls != null" >
+        iconcls = #{iconcls,jdbcType=VARCHAR},
+      </if>
+      <if test="src != null" >
+        src = #{src,jdbcType=VARCHAR},
+      </if>
+      <if test="seq != null" >
+        seq = #{seq,jdbcType=DECIMAL},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.model.Mymenu" >
+    update mymenu
+    set text = #{text,jdbcType=VARCHAR},
+      pid = #{pid,jdbcType=VARCHAR},
+      iconcls = #{iconcls,jdbcType=VARCHAR},
+      src = #{src,jdbcType=VARCHAR},
+      seq = #{seq,jdbcType=DECIMAL}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+</mapper>
